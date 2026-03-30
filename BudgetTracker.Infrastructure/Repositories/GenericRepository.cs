@@ -19,7 +19,6 @@ namespace BudgetTracker.Infrastructure.Repositories
             ArgumentNullException.ThrowIfNull(entity);
 
             await context.AddAsync(entity);
-            await context.SaveChangesAsync();
 
             return entity;
         }
@@ -30,7 +29,6 @@ namespace BudgetTracker.Infrastructure.Repositories
             ArgumentNullException.ThrowIfNull(entity);
 
             context.Remove(entity);
-            await context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
@@ -46,7 +44,6 @@ namespace BudgetTracker.Infrastructure.Repositories
         public async Task<T> UpdateByIdAsync(T entity)
         {
             context.Set<T>().Update(entity);
-            await context.SaveChangesAsync();
             return entity;
         }
     }

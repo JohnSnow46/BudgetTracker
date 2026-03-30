@@ -1,4 +1,8 @@
+using BudgetTracker.Application.Interfaces;
+using BudgetTracker.Application.Services;
+using BudgetTracker.Domain.Interfaces;
 using BudgetTracker.Infrastructure.ApplicationDbContext;
+using BudgetTracker.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +15,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<DataDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 
