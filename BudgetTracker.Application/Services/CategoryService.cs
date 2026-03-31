@@ -77,18 +77,18 @@ namespace BudgetTracker.Application.Services
             };
         }
 
-        public async Task<CategoryResponseDto> UpdateCategoryByIdAsync(Guid Id, UpdateCategoryDto categoryDto)
+        public async Task<CategoryResponseDto> UpdateCategoryByIdAsync(Guid id, UpdateCategoryDto categoryDto)
         {
-            if (Id == Guid.Empty)
+            if (id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(Id));
+                throw new ArgumentNullException(nameof(id));
             }
             if (categoryDto == null)
             {
-                throw new ArgumentNullException(nameof(categoryDto);
+                throw new ArgumentNullException(nameof(categoryDto));
             }
 
-            var category = await _unitOfWork.Categories.GetByIdAsync(Id);
+            var category = await _unitOfWork.Categories.GetByIdAsync(id);
             if (category == null)
             {
                 throw new KeyNotFoundException(nameof(category));

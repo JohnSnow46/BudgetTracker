@@ -1,3 +1,4 @@
+using BudgetTracker.API.Middleware;
 using BudgetTracker.Application.Interfaces;
 using BudgetTracker.Application.Services;
 using BudgetTracker.Domain.Interfaces;
@@ -19,8 +20,13 @@ builder.Services.AddDbContext<DataDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
+app.MapControllers();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
