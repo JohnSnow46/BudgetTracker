@@ -60,6 +60,9 @@ namespace BudgetTracker.Infrastructure.ApplicationDbContext
                 entity.Property(t => t.Amount)
                 .HasPrecision(18,2)
                 .IsRequired();
+
+                entity.Property( t => t.Description)
+                .HasMaxLength(500);
             });
 
             modelBuilder.Entity<Category>()

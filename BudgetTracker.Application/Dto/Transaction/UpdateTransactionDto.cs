@@ -1,20 +1,14 @@
 ﻿using BudgetTracker.Domain.Enums;
 
-
-namespace BudgetTracker.Domain
+namespace BudgetTracker.Application.Dto.Transaction
 {
-    public class Transaction
+    public class UpdateTransactionDto
     {
-        public Guid Id { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public TransactionType Type { get; set; }
         public string? Description { get; set; }
 
         public Guid CategoryId { get; set; }
-        public Guid BudgetId { get; set; }
-
-        public Category Category { get; set; }
-        public Budget Budget { get; set; }
     }
 }

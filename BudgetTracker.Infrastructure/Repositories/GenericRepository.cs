@@ -3,6 +3,7 @@ using BudgetTracker.Infrastructure.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BudgetTracker.Infrastructure.Repositories
@@ -29,6 +30,11 @@ namespace BudgetTracker.Infrastructure.Repositories
             ArgumentNullException.ThrowIfNull(entity);
 
             context.Remove(entity);
+        }
+
+        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await context.Set<T>().Where(predicate).ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()

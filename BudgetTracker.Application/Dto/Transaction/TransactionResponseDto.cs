@@ -1,9 +1,11 @@
 ﻿using BudgetTracker.Domain.Enums;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-
-namespace BudgetTracker.Domain
+namespace BudgetTracker.Application.Dto.Transaction
 {
-    public class Transaction
+    public class TransactionResponseDto
     {
         public Guid Id { get; set; }
         public decimal Amount { get; set; }
@@ -14,7 +16,5 @@ namespace BudgetTracker.Domain
         public Guid CategoryId { get; set; }
         public Guid BudgetId { get; set; }
 
-        public Category Category { get; set; }
-        public Budget Budget { get; set; }
     }
 }

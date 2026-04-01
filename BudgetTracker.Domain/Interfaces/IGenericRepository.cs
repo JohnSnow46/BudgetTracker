@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace BudgetTracker.Domain.Interfaces
@@ -11,5 +12,6 @@ namespace BudgetTracker.Domain.Interfaces
         Task<T?> GetByIdAsync(Guid Id);
         Task<IEnumerable<T>> GetAllAsync();
         Task DeleteAsync(Guid Id);
+        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
     }
 }
