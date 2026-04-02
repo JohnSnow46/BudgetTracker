@@ -31,7 +31,7 @@ namespace BudgetTracker.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto dto)
+        public async Task<IActionResult> CreateCategory([FromBody]CreateCategoryDto dto)
         {
             var category = await _categoryService.CreateCategoryAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = category.Id }, category);
