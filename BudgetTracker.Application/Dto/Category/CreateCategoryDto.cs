@@ -1,5 +1,4 @@
-﻿
-namespace BudgetTracker.Application.Dto.Category
+﻿namespace BudgetTracker.Application.Dto.Category
 {
     public class CreateCategoryDto
     {

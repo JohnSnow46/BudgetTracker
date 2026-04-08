@@ -4,6 +4,8 @@ using BudgetTracker.Application.Services;
 using BudgetTracker.Domain.Interfaces;
 using BudgetTracker.Infrastructure.ApplicationDbContext;
 using BudgetTracker.Infrastructure.Repositories;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+// fluent validation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CategoryService>();
 
 builder.Services.AddControllers();
 
