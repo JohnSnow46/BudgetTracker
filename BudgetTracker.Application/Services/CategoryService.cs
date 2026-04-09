@@ -35,14 +35,20 @@ namespace BudgetTracker.Application.Services
             };
         }
 
-        public async Task DeleteCategoryAsync(Guid Id)
+        public async Task DeleteCategoryAsync(Guid id)
         {
-            if(Id == Guid.Empty)
+            if(id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(Id));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            await _unitOfWork.Categories.DeleteAsync(Id);
+            var category = await _unitOfWork.Categories.GetByIdAsync(id);
+            if (category == null)
+            {
+                throw new KeyNotFoundException($"Category with ID: {id} not found");
+            }
+
+            await _unitOfWork.Categories.DeleteAsync(id);
             await _unitOfWork.CompleteAsync();
         }
 
@@ -57,17 +63,17 @@ namespace BudgetTracker.Application.Services
             });
         }
 
-        public async Task<CategoryResponseDto> GetCategoryByIdAsync(Guid Id)
+        public async Task<CategoryResponseDto> GetCategoryByIdAsync(Guid id)
         {
-            if(Id == Guid.Empty)
+            if(id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(Id));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            var category = await _unitOfWork.Categories.GetByIdAsync(Id);
+            var category = await _unitOfWork.Categories.GetByIdAsync(id);
             if(category == null)
             {
-                throw new KeyNotFoundException(nameof(category));
+                throw new KeyNotFoundException($"Category with ID: {id} not found");
             }
 
             return new CategoryResponseDto
@@ -91,7 +97,7 @@ namespace BudgetTracker.Application.Services
             var category = await _unitOfWork.Categories.GetByIdAsync(id);
             if (category == null)
             {
-                throw new KeyNotFoundException(nameof(category));
+                throw new KeyNotFoundException($"Category with ID: {id} not found");
             }
 
             category.Name = categoryDto.Name;

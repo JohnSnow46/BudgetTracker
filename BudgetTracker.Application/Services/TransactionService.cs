@@ -35,7 +35,7 @@ namespace BudgetTracker.Application.Services
             var budget = await _unitOfWork.Budgets.GetByIdAsync(transactionDto.BudgetId);
             if(budget == null)
             {
-                throw new KeyNotFoundException(nameof(budget));
+                throw new KeyNotFoundException($"Invalid BudgetId: {transactionDto.BudgetId} does not exist");
             }
 
             budget.AddTransaction(transaction);
@@ -60,7 +60,13 @@ namespace BudgetTracker.Application.Services
         {
             if (Id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(Id));
+                throw new ArgumentException(nameof(Id));
+            }
+
+            var transaction = await _unitOfWork.Transactions.GetByIdAsync(Id);
+            if (transaction == null)
+            {
+                throw new KeyNotFoundException($"Transaction with {Id} was not found");
             }
 
             await _unitOfWork.Transactions.DeleteAsync(Id);
@@ -71,14 +77,10 @@ namespace BudgetTracker.Application.Services
         {
             if(budgetId == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(budgetId));
+                throw new ArgumentException(nameof(budgetId));
             }
+
             var transactions = await _unitOfWork.Transactions.FindAsync(t => t.BudgetId == budgetId);
-            
-            if(transactions == null)
-            {
-                throw new KeyNotFoundException(nameof(transactions));
-            }
 
             return transactions.Select(t => new TransactionResponseDto
             {
@@ -97,14 +99,14 @@ namespace BudgetTracker.Application.Services
         {
             if (Id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(Id));
+                throw new ArgumentException(nameof(Id));
             }
 
             var transaction = await _unitOfWork.Transactions.GetByIdAsync(Id);
 
             if (transaction == null)
             {
-                throw new KeyNotFoundException(nameof(transaction));
+                throw new KeyNotFoundException($"Transaction with {Id} was not found");
             }
 
             return new TransactionResponseDto
@@ -128,14 +130,14 @@ namespace BudgetTracker.Application.Services
             }
             if(Id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(Id));
+                throw new ArgumentException(nameof(Id));
             }
 
             var transaction = await _unitOfWork.Transactions.GetByIdAsync(Id);
 
             if(transaction == null)
             {
-                throw new KeyNotFoundException(nameof(transaction));
+                throw new KeyNotFoundException($"Transaction with {Id} was not found");
             }
 
             transaction.Amount = transactionDto.Amount;

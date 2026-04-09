@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using BudgetTracker.Application.Exceptions;
+using System.Net;
 using System.Text.Json;
 
 namespace BudgetTracker.API.Middleware
@@ -30,6 +31,7 @@ namespace BudgetTracker.API.Middleware
 
             var statusCode = ex switch
             {
+                UserNotFoundException => HttpStatusCode.NotFound, // 404
                 ArgumentException => HttpStatusCode.BadRequest,      // 400
                 UnauthorizedAccessException => HttpStatusCode.Unauthorized, // 401
                 KeyNotFoundException => HttpStatusCode.NotFound,     // 404

@@ -1,6 +1,6 @@
-﻿using BCrypt.Net;
-using BudgetTracker.Application.Dto.Budget;
+﻿using BudgetTracker.Application.Dto.Budget;
 using BudgetTracker.Application.Dto.User;
+using BudgetTracker.Application.Exceptions;
 using BudgetTracker.Application.Interfaces;
 using BudgetTracker.Domain;
 using BudgetTracker.Domain.Interfaces;
@@ -60,6 +60,12 @@ namespace BudgetTracker.Application.Services
                 throw new ArgumentException(nameof(Id));
             }
 
+            var user = await _unitOfWork.Users.GetByIdAsync(Id);
+            if (user == null)
+            {
+                throw new UserNotFoundException(Id);
+            }
+
             await _unitOfWork.Users.DeleteAsync(Id);
             await _unitOfWork.CompleteAsync();
         }
@@ -82,14 +88,14 @@ namespace BudgetTracker.Application.Services
 
             if(user == null)
             {
-                throw new KeyNotFoundException(nameof(user));
+                throw new UserNotFoundException(Id);
             }
 
             var budget = (await _unitOfWork.Budgets.FindAsync(b => b.UserId == Id)).FirstOrDefault();
 
             if(budget == null)
             {
-                throw new KeyNotFoundException(nameof(budget));
+                throw new InvalidOperationException(nameof(budget));
             }
 
             return new UserResponseDto
@@ -120,7 +126,7 @@ namespace BudgetTracker.Application.Services
 
             if(user == null)
             {
-                throw new KeyNotFoundException(nameof(user));
+                throw new UserNotFoundException(Id);
             }
 
             user.Login = userDto.Login;

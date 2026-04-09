@@ -27,7 +27,6 @@ namespace BudgetTracker.Infrastructure.Repositories
         public async Task DeleteAsync(Guid Id)
         {
             var entity = await GetByIdAsync(Id);
-            ArgumentNullException.ThrowIfNull(entity);
 
             context.Remove(entity);
         }
