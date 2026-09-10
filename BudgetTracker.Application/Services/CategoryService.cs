@@ -39,7 +39,7 @@ namespace BudgetTracker.Application.Services
         {
             if(id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentException(nameof(id));
             }
 
             var category = await _unitOfWork.Categories.GetByIdAsync(id);
@@ -67,7 +67,7 @@ namespace BudgetTracker.Application.Services
         {
             if(id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentException(nameof(id));
             }
 
             var category = await _unitOfWork.Categories.GetByIdAsync(id);
@@ -87,7 +87,7 @@ namespace BudgetTracker.Application.Services
         {
             if (id == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentException(nameof(id));
             }
             if (categoryDto == null)
             {
